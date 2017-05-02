@@ -11,16 +11,18 @@ import spark.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProductController {
-
-    public static ModelAndView renderProducts(Request req, Response res) {
+/**
+ * Created by judit on 02.05.17.
+ */
+public class CartController {
+    public static ModelAndView renderCart(Request req, Response res) {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 
         Map params = new HashMap<>();
-        params.put("category", productCategoryDataStore.find(1));
+        params.put("order", productCategoryDataStore.find(1));
         params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
-        return new ModelAndView(params, "product/index");
+        return new ModelAndView(params, "product/cart");
     }
 
 }
