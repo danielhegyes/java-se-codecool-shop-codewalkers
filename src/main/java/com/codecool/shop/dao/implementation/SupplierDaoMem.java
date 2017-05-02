@@ -18,6 +18,7 @@ public class SupplierDaoMem implements SupplierDao {
 
     public static SupplierDaoMem getInstance() {
         if (instance == null) {
+
             instance = new SupplierDaoMem();
         }
         return instance;
