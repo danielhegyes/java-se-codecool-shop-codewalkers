@@ -7,13 +7,17 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 /**
  * Created by tahin on 2017.05.02..
  */
 public class TestOrder {
 
-    public static void main(String[] args) {
+
+
+    public static Order dummyOrder() {
+        Order newOrder = new Order();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
@@ -28,13 +32,13 @@ public class TestOrder {
         productDataStore.add(new Product("alma", 22.2f, "HUF", "piros alma", b, a));
 
 
-        Order newOrder = new Order();
-        Lineitem line = new Lineitem(productDataStore.find(1));
+
+        Lineitem line = new Lineitem(productDataStore.find(5));
         newOrder.addLine(line);
 
 
         productDataStore.add(new Product("körte", 10.0f, "HUF", "zöld körte", b, a));
-        Lineitem line2 = new Lineitem(productDataStore.find(2));
+        Lineitem line2 = new Lineitem(productDataStore.find(6));
 
 
         line2.addOneToQuantity();
@@ -43,6 +47,9 @@ public class TestOrder {
 
         System.out.println(line);
         System.out.println(newOrder);
+        System.out.println(newOrder.getOrderLines());
+
+        return newOrder;
     }
 
 }

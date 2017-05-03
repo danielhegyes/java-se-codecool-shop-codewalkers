@@ -36,7 +36,7 @@
 <div class="container">
 
     <div class="well well-sm">
-        <strong th:text="${order.id}">Order Id</strong>
+        <strong th:text="${order.getId()}">Order Id</strong>
     </div>
 
 
@@ -51,25 +51,25 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="prod,iterStat : ${products}">
-            <td th:text="${prod.name}">Alma</td>
+        <tr th:each="lineitem,iterStat : ${lines}">
+            <td th:text="${lineitem.getProduct().getName()}">Alma</td>
 
             <td>
             <button type="button" class="btn btn-danger" href="#"> - </button>
             </td>
 
-            <td th:text="${prod.amount}">2</td>
+            <td th:text="${lineitem.getQuantity()}">2</td>
 
             <td>
             <button type="button" class="btn btn-success" href="#"> + </button>
             </td>
             
-            <td th:text="${prod.price}">2.0</td>
+            <td th:text="${lineitem.getLinePrice()}">2.0</td>
         </tr>
         </tbody>
 
         <tr>
-            <th th:text="${order.total}">Total</th>
+            <th th:text="${order.getTotal()}">Total</th>
         </tr>
 
     </table>

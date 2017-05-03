@@ -29,6 +29,14 @@ public class Order {
         this.total += line.getLinePrice();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
     @Override
     public String toString() {
         return "Order{" +

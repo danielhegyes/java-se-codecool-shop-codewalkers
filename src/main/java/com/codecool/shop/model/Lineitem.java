@@ -43,4 +43,12 @@ public class Lineitem {
             this.linePrice -= this.product.getDefaultPrice();
         }
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }

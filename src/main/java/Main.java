@@ -6,9 +6,7 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
+import com.codecool.shop.model.*;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -27,6 +25,7 @@ public class Main {
 
         // populate some data for the memory storage
         populateData();
+        //TestOrder.dummyOrder();
 
         // Always start with more specific routes
         get("/hello", (req, res) -> "Hello World");
@@ -68,6 +67,38 @@ public class Main {
         productDataStore.add(new Product("Amazon phone", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", phone, amazon));
 
     }
+
+//    public static Order dummyOrder(){
+//        Order newOrder = new Order();
+//
+//        ProductDao productDataStore = ProductDaoMem.getInstance();
+//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+//        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+//
+//        Supplier a = new Supplier("almaárus", "almákat árul");
+//        supplierDataStore.add(a);
+//
+//        ProductCategory b = new ProductCategory("gyümölcs", "sdasg", "sdfasdfa");
+//        productCategoryDataStore.add(b);
+//
+//
+//        productDataStore.add(new Product("alma", 22.2f, "HUF", "piros alma", b, a));
+//
+//
+//
+//        Lineitem line = new Lineitem(productDataStore.find(1));
+//        newOrder.addLine(line);
+//
+//
+//        productDataStore.add(new Product("körte", 10.0f, "HUF", "zöld körte", b, a));
+//        Lineitem line2 = new Lineitem(productDataStore.find(2));
+//
+//
+//        line2.addOneToQuantity();
+//        newOrder.addLine(line2);
+//
+//        return newOrder;
+//    }
 
 
 }
