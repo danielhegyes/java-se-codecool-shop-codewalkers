@@ -33,10 +33,20 @@
     <h1>Codecool Shop</h1>
 </div>
 
+
 <div class="container">
     <div class="well well-sm">
-        <strong>Categories:</strong>
-        <a th:text="${category.name}" class="btn btn-success" href="#"></a>
+        <strong><button><a href="/index">All Products</a></button></strong>
+        <a th:each="cat : ${category}"
+           th:text="${cat.name}"
+           class="btn btn-success"
+           th:href="${'/category/'+ cat.getId()}"></a>
+    </div>
+    <div class="well well-sm">
+        <a th:each="sup : ${supplier}"
+           th:text="${sup.name}"
+           class="btn btn-success"
+           th:href="${'/supplier/'+ sup.getId()}"></a>
     </div>
 
     <div id="products" class="row list-group">

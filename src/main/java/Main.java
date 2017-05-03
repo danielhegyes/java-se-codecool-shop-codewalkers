@@ -27,14 +27,23 @@ public class Main {
         // populate some data for the memory storage
         populateData();
 
-        // Always start with more specific routes
-        get("/hello", (req, res) -> "Hello World");
-
         // Always add generic routes to the end
         get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());
+
         // Equivalent with above
         get("/index", (Request req, Response res) -> {
            return new ThymeleafTemplateEngine().render( ProductController.renderProducts(req, res) );
+        });
+        get("/category/:id", (Request req, Response res) -> {
+            String categoryStringId = req.params(":id");
+            int  categoryId = Integer.parseInt(categoryStringId);
+            return new ThymeleafTemplateEngine().render( ProductController.prodByCategory(req, res, categoryId));
+        });
+
+        get("/supplier/:id", (Request req, Response res) -> {
+            String supplierStringId = req.params(":id");
+            int  supplierId = Integer.parseInt(supplierStringId);
+            return new ThymeleafTemplateEngine().render( ProductController.prodBySupplier(req, res, supplierId));
         });
 
         // Add this line to your project to enable the debug screen
@@ -63,7 +72,7 @@ public class Main {
         productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
-        productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", phone, amazon));
+        productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", phone, lenovo));
 
     }
 
