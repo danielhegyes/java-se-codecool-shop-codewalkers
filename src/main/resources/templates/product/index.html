@@ -35,7 +35,8 @@
 
 <div class="container">
     <div class="well well-sm">
-        <strong th:text="${category.name}">Category Title</strong>
+        <strong>Categories:</strong>
+        <a th:text="${category.name}" class="btn btn-success" href="#"></a>
     </div>
 
     <div id="products" class="row list-group">
