@@ -24,6 +24,8 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
+    <script src="/js/script.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/css/custom.css" />
 </head>
 
@@ -51,7 +53,8 @@
                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="#">Add to cart</a>
+                            <!--<a class="btn btn-success" th:href="${'/hello/' + prod.getId()}">Add to cart</a>-->
+                            <div th:id="${'add' + prod.getId()}"  class="btn btn-success">Add to cart</div>
                         </div>
                     </div>
                 </div>

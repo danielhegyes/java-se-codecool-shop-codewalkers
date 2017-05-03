@@ -39,6 +39,28 @@ public class Main {
         get("/cart", CartController::renderCart, new ThymeleafTemplateEngine());
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
+
+        get("/hello/:id", (request, response) -> {
+            String idString = request.params(":id");
+            int id = Integer.parseInt(idString);
+            Order.getInstance().addItem(id);
+            return request.params(":id");
+        });
+
+        get("/addToQuantity/:id", (request, response) -> {
+            String idString = request.params(":id");
+            int id = Integer.parseInt(idString);
+            Lineitem selected = Order.getInstance().getLine(id);
+            selected.addOneToQuantity();
+
+            return request.params(":id");
+        });
+
+
+
+
+
+
     }
 
     public static void populateData() {

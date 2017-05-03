@@ -17,7 +17,7 @@ public class TestOrder {
 
 
     public static Order dummyOrder() {
-        Order newOrder = new Order();
+        Order newOrder = Order.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
@@ -34,7 +34,7 @@ public class TestOrder {
 
 
         Lineitem line = new Lineitem(productDataStore.find(5));
-        newOrder.addLine(line);
+        //newOrder.addLine(line);
 
 
         productDataStore.add(new Product("körte", 10.0f, "HUF", "zöld körte", b, a));
@@ -42,7 +42,7 @@ public class TestOrder {
 
 
         line2.addOneToQuantity();
-        newOrder.addLine(line2);
+        //newOrder.addLine(line2);
 
 
         System.out.println(line);

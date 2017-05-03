@@ -25,6 +25,8 @@
             crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+
+    <script src="/js/script2.js"></script>
 </head>
 
 <body>
@@ -55,7 +57,7 @@
             <td th:text="${lineitem.getProduct().getName()}">Alma</td>
 
             <td>
-            <button type="button" class="btn btn-danger" href="#"> - </button>
+            <div th:id="${'raise' + lineitem.getId()}" class="btn btn-danger" > - </div>
             </td>
 
             <td th:text="${lineitem.getQuantity()}">2</td>

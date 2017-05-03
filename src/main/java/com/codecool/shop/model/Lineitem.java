@@ -7,6 +7,7 @@ package com.codecool.shop.model;
  */
 public class Lineitem {
 
+    private int id;
     private Product product;
     private int quantity = 1;
     private float linePrice;
@@ -18,6 +19,10 @@ public class Lineitem {
 
     public float getLinePrice() {
         return linePrice;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
