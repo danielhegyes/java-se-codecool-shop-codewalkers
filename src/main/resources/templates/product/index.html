@@ -24,6 +24,8 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
+    <script src="/js/script.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/css/custom.css" />
 </head>
 
@@ -33,9 +35,37 @@
     <h1>Codecool Shop</h1>
 </div>
 
+
 <div class="container">
     <div class="well well-sm">
-        <strong th:text="${category.name}">Category Title</strong>
+        <div class="btn-group">
+            <div class="filter-col col-lg-2">
+                <div class="dropdown">
+                    <button class="filter-btn btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        Categories
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/index"><strong>All categories</strong></a></li>
+                        <li th:each="cat : ${category}"><a th:href="${'/category/'+ cat.getId()}">
+                            <strong th:text="${cat.name}"></strong></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <div class="filter-col col-lg-2">
+        <div class="btn-group">
+            <div class="dropdown">
+                    <button class="filter-btn btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        Suppliers
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/index"><strong>All suppliers</strong></a></li>
+                        <li th:each="sup : ${supplier}"><a th:href="${'/supplier/'+ sup.getId()}">
+                            <strong th:text="${sup.name}"></strong></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="products" class="row list-group">
@@ -51,7 +81,8 @@
                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="#">Add to cart</a>
+                            <!--<a class="btn btn-success" th:href="${'/hello/' + prod.getId()}">Add to cart</a>-->
+                            <div th:id="${'add' + prod.getId()}"  class="btn btn-success">Add to cart</div>
                         </div>
                     </div>
                 </div>
@@ -59,6 +90,12 @@
         </div>
     </div>
 
+</div>
+
+<div class="container">
+    <div class="well well-sm">
+        <a href="/cart" class="btn btn-primary">Shopping Cart</a>
+    </div>
 </div>
 
 <div th:replace="footer :: copy"></div>
