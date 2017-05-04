@@ -57,7 +57,7 @@
             <td th:text="${lineitem.getProduct().getName()}">Alma</td>
 
             <td>
-            <div th:id="reduce" class="btn btn-danger" > - </div>
+            <div th:id="${'sub' + lineitem.getId()}" class="btn btn-danger" > - </div>
             </td>
 
             <td th:id="${'quantity' + lineitem.getId()}" th:text="${lineitem.getQuantity()}">2</td>

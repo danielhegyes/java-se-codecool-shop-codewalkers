@@ -51,6 +51,7 @@ public class Lineitem {
         } else {
             this.quantity -= 1;
             this.linePrice -= this.product.getDefaultPrice();
+
         }
     }
 
