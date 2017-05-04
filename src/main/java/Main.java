@@ -28,8 +28,6 @@ public class Main {
 
         // populate some data for the memory storage
         populateData();
-        //TestOrder.dum
-        // myOrder();
 
         // Always add generic routes to the end
         get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());
@@ -78,7 +76,25 @@ public class Main {
                     .build();
 
             return object.toString();
+        });
 
+        get("/subFromQuantity/:id", (request, response) -> {
+            String idString = request.params(":id");
+            int id = Integer.parseInt(idString);
+            Lineitem selected = Order.getInstance().getLine(id);
+            if (selected.subOneFromQuantity()) {
+                    Order.getInstance().removeLine(selected);
+            }
+
+            System.out.println(Order.getInstance());
+
+            JsonObject object = Json.createObjectBuilder()
+                    .add("quantity", selected.getQuantity())
+                    .add("linePrice", selected.getLinePrice())
+                    .add("total", Order.getInstance().getTotal())
+                    .build();
+
+            return object.toString();
         });
     }
 

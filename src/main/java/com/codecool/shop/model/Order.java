@@ -5,7 +5,6 @@ package com.codecool.shop.model;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 
-import javax.sound.sampled.Line;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -46,6 +45,10 @@ public class Order {
         this.total += total;
     }
 
+    public void subFromTotal(float total) {
+        this.total -= total;
+    }
+
     public boolean addLine(Lineitem line){
         for (Lineitem l: orderLines){
             if (line.getProduct().equals(l.getProduct())){
@@ -55,6 +58,10 @@ public class Order {
         this.orderLines.add(line);
         this.total += line.getLinePrice();
         return true;
+    }
+
+    public void removeLine (Lineitem line) {
+              orderLines.remove(line);
     }
 
     public void addItem(int id){
