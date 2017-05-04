@@ -13,9 +13,10 @@ import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
-//import org.json.*;
+import javax.json.JsonObject;
+import javax.json.Json;
 
-import javax.json.*;
+import java.util.HashMap;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
@@ -59,13 +60,14 @@ public class Main {
             Lineitem selected = Order.getInstance().getLine(id);
             selected.addOneToQuantity();
             System.out.println(Order.getInstance());
-            float[] result = new float[3];
 
+            JsonObject object = Json.createObjectBuilder()
+                    .add("quantity", selected.getQuantity())
+                    .add("linePrice", selected.getLinePrice())
+                    .add("total", Order.getInstance().getTotal())
+                    .build();
 
-            result[0] = selected.getQuantity();
-            result[1] = selected.getLinePrice();
-            result[2] = Order.getInstance().getTotal();
-            return result;
+            return object.toString();
 
         });
     }

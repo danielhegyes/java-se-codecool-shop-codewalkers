@@ -13,12 +13,18 @@ $ (document).ready(function () {
         var id = this.id.substring(5,this.id.length);
         console.log(id);
         $.ajax({url: "/addToQuantity/" + id, success: function(result){
-            console.log("Amount raised");
-            var quantity = $("#quantity"+id).text();
-            $("#quantity"+id).text(result[0]);
             console.log(result);
+            var json1 = JSON.parse(result);
+            console.log(json1);
+            var quantity = $("#quantity"+id).text();
+            $("#quantity"+id).text(json1.quantity);
+            //console.log(json1.quantity);
+            var linePrice = $("#linePrice"+id).text();
+            $("#linePrice"+id).text(json1.linePrice);
+            var total = $("#total").text();
+            $("#total").text(json1.total);
 
-            // result -> {"quantity": 12; "price": 44.8; "totalPrice": 144.8}
+
         }});
     });
 });

@@ -66,12 +66,12 @@
                 <div th:id="${'raise' + lineitem.getId()}" class="btn btn-danger" > + </div>
             </td>
             
-            <td th:text="${lineitem.getLinePrice()}">2.0</td>
+            <td th:id="${'linePrice' + lineitem.getId()}" th:text="${lineitem.getLinePrice()}">2.0</td>
         </tr>
         </tbody>
 
         <tr>
-            <th th:text="${order.getTotal()}">Total</th>
+            <th id="total" th:text="${order.getTotal()}">Total</th>
         </tr>
 
     </table>
