@@ -5,6 +5,7 @@ package com.codecool.shop.model;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public class Order {
 
     private int id;
     private Set<Lineitem> orderLines = new LinkedHashSet<>();
-    private float total = 0;
+    private double total = 0;
     private static Order instance = null;
 
 
@@ -74,8 +75,8 @@ public class Order {
         return id;
     }
 
-    public float getTotal() {
-        return total;
+    public double getTotal() {
+        return Math.round(total * 100d) / 100d;
     }
 
     @Override
