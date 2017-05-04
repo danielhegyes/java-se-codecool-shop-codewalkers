@@ -42,7 +42,7 @@ public class Main {
 
         // populate some data for the memory storage
         populateData();
-        //TestOrder.dummyOrder();
+
 
         // Always add generic routes to the end
         get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());

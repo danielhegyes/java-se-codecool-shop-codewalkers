@@ -22,7 +22,7 @@ public class CartController {
 //        ProductDao productDataStore = ProductDaoMem.getInstance();
 //        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 
-        Order myOrder = TestOrder.dummyOrder();
+        Order myOrder = Order.getInstance();
         Map params = new HashMap<>();
 //        params.put("order", productCategoryDataStore.find(1));
 //        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
