@@ -7,9 +7,15 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.*;
+import com.sun.org.apache.xpath.internal.operations.Or;
+import jdk.nashorn.internal.parser.JSONParser;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
+//import org.json.*;
+
+import javax.json.*;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
@@ -34,7 +40,7 @@ public class Main {
         get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());
         // Equivalent with above
         get("/index", (Request req, Response res) -> {
-           return new ThymeleafTemplateEngine().render( ProductController.renderProducts(req, res) );
+            return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res));
         });
         get("/cart", CartController::renderCart, new ThymeleafTemplateEngine());
         // Add this line to your project to enable the debug screen
@@ -52,16 +58,22 @@ public class Main {
             int id = Integer.parseInt(idString);
             Lineitem selected = Order.getInstance().getLine(id);
             selected.addOneToQuantity();
+            System.out.println(Order.getInstance());
+            float[] result = new float[3];
 
-            return request.params(":id");
+
+            result[0] = selected.getQuantity();
+            result[1] = selected.getLinePrice();
+            result[2] = Order.getInstance().getTotal();
+            return result;
+
         });
-
-
-
-
-
-
     }
+
+
+
+
+
 
     public static void populateData() {
 

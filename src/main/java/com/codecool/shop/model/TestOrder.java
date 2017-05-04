@@ -18,6 +18,7 @@ public class TestOrder {
 
     public static Order dummyOrder() {
         Order newOrder = Order.getInstance();
+
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
@@ -41,13 +42,13 @@ public class TestOrder {
         Lineitem line2 = new Lineitem(productDataStore.find(6));
 
 
-        line2.addOneToQuantity();
+        //line2.addOneToQuantity();
         //newOrder.addLine(line2);
 
 
-        System.out.println(line);
-        System.out.println(newOrder);
-        System.out.println(newOrder.getOrderLines());
+//        System.out.println(line);
+//        System.out.println(newOrder);
+//        System.out.println(newOrder.getOrderLines());
 
         return newOrder;
     }

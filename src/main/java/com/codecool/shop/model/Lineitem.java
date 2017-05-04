@@ -7,12 +7,16 @@ package com.codecool.shop.model;
  */
 public class Lineitem {
 
+    private static int currentId = 0;
+
     private int id;
     private Product product;
     private int quantity = 1;
     private float linePrice;
 
     public Lineitem(Product product){
+        this.id = currentId;
+        currentId++;
         this.product = product;
         this.linePrice = product.getDefaultPrice();
     }
@@ -37,6 +41,7 @@ public class Lineitem {
     public void addOneToQuantity(){
         this.quantity += 1;
         this.linePrice += this.product.getDefaultPrice();
+        Order.getInstance().addToTotal(this.getProduct().getDefaultPrice());
     }
 
     public void subOneFromQuantity(){

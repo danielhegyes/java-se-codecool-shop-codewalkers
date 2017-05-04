@@ -42,9 +42,9 @@ public class Order {
         return orderLines.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 
-
-
-
+    public void addToTotal(float total) {
+        this.total += total;
+    }
 
     public boolean addLine(Lineitem line){
         for (Lineitem l: orderLines){

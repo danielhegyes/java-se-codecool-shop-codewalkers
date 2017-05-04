@@ -10,11 +10,15 @@ $ (document).ready(function () {
     });
 
     $('div[id^="raise"]').click(function(){
-        console.log("sfsagh");
         var id = this.id.substring(5,this.id.length);
         console.log(id);
         $.ajax({url: "/addToQuantity/" + id, success: function(result){
             console.log("Amount raised");
+            var quantity = $("#quantity"+id).text();
+            $("#quantity"+id).text(result[0]);
+            console.log(result);
+
+            // result -> {"quantity": 12; "price": 44.8; "totalPrice": 144.8}
         }});
     });
 });

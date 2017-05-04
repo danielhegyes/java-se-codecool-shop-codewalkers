@@ -27,7 +27,6 @@
     <link rel="stylesheet" type="text/css" href="/css/custom.css" />
 
     <script src="/js/script.js"></script>
-    <script src="/js/script2.js"></script>
 </head>
 
 <body>
@@ -58,13 +57,13 @@
             <td th:text="${lineitem.getProduct().getName()}">Alma</td>
 
             <td>
-            <div th:id="${'raise' + lineitem.getId()}" class="btn btn-danger" > - </div>
+            <div th:id="reduce" class="btn btn-danger" > - </div>
             </td>
 
-            <td th:text="${lineitem.getQuantity()}">2</td>
+            <td th:id="${'quantity' + lineitem.getId()}" th:text="${lineitem.getQuantity()}">2</td>
 
             <td>
-            <button type="button" class="btn btn-success" href="#"> + </button>
+                <div th:id="${'raise' + lineitem.getId()}" class="btn btn-danger" > + </div>
             </td>
             
             <td th:text="${lineitem.getLinePrice()}">2.0</td>
