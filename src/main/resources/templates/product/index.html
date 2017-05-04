@@ -37,32 +37,36 @@
 
 
 <div class="container">
-    <div class="filter-col col-lg-2">
-            <div class="dropdown">
-                <button class="filter-btn btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                    Categories
-                    <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="/index"><strong>All categories</strong></a></li>
-                    <li th:each="cat : ${category}"><a th:href="${'/category/'+ cat.getId()}">
-                        <strong th:text="${cat.name}"></strong></a></li>
-                </ul>
+    <div class="well well-sm">
+        <div class="btn-group">
+            <div class="filter-col col-lg-2">
+                <div class="dropdown">
+                    <button class="filter-btn btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        Categories
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/index"><strong>All categories</strong></a></li>
+                        <li th:each="cat : ${category}"><a th:href="${'/category/'+ cat.getId()}">
+                            <strong th:text="${cat.name}"></strong></a></li>
+                    </ul>
+                </div>
             </div>
-    </div>
+        </div>
     <div class="filter-col col-lg-2">
+        <div class="btn-group">
             <div class="dropdown">
-                <button class="filter-btn btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                    Suppliers
-                    <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="/index"><strong>All suppliers</strong></a></li>
-                    <li th:each="sup : ${supplier}"><a th:href="${'/supplier/'+ sup.getId()}">
-                        <strong th:text="${sup.name}"></strong></a></li>
-                </ul>
+                    <button class="filter-btn btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        Suppliers
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/index"><strong>All suppliers</strong></a></li>
+                        <li th:each="sup : ${supplier}"><a th:href="${'/supplier/'+ sup.getId()}">
+                            <strong th:text="${sup.name}"></strong></a></li>
+                    </ul>
+                </div>
             </div>
+        </div>
     </div>
-
-    <div class="well well-sm"></div>
 
     <div id="products" class="row list-group">
 
