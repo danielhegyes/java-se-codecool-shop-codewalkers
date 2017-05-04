@@ -44,6 +44,12 @@ $ (document).ready(function () {
             var total = $("#total").text();
             $("#total").text(json1.total);
 
+            if (json1.quantity == 0) {
+                $("#row"+id).remove();
+                // $("#quantity"+id).remove();
+                // $("#linePrice"+id).remove();
+            }
+
         }});
     });
 });

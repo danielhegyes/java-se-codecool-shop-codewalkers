@@ -53,7 +53,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="lineitem,iterStat : ${lines}">
+        <tr th:each="lineitem,iterStat : ${lines}" th:id="${'row' + lineitem.getId()}">
             <td th:text="${lineitem.getProduct().getName()}">Alma</td>
 
             <td>

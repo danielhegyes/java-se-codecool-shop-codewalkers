@@ -44,15 +44,11 @@ public class Lineitem {
         Order.getInstance().addToTotal(this.getProduct().getDefaultPrice());
     }
 
-    public void subOneFromQuantity(){
-
-        if (this.quantity == 1) {
-            this.quantity = 1;
-        } else {
-            this.quantity -= 1;
-            this.linePrice -= this.product.getDefaultPrice();
-
-        }
+    public boolean subOneFromQuantity(){
+        this.quantity -= 1;
+        this.linePrice -= this.product.getDefaultPrice();
+        Order.getInstance().subFromTotal(this.getProduct().getDefaultPrice());
+        return (quantity <= 0);
     }
 
     public Product getProduct() {
