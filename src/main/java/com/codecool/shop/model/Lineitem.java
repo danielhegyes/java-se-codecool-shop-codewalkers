@@ -12,7 +12,7 @@ public class Lineitem {
     private int id;
     private Product product;
     private int quantity = 1;
-    private float linePrice;
+    private double linePrice;
 
     public Lineitem(Product product){
         this.id = currentId;
@@ -21,8 +21,8 @@ public class Lineitem {
         this.linePrice = product.getDefaultPrice();
     }
 
-    public float getLinePrice() {
-        return linePrice;
+    public double getLinePrice() {
+        return Math.round(linePrice * 100d) / 100d;
     }
 
     public int getId() {
