@@ -46,8 +46,6 @@ $ (document).ready(function () {
 
             if (json1.quantity == 0) {
                 $("#row"+id).remove();
-                // $("#quantity"+id).remove();
-                // $("#linePrice"+id).remove();
             }
 
         }});
