@@ -1,5 +1,7 @@
 *.class
 
+dbConfig.txt
+
 # OS-X
 **/.DS_Store
 

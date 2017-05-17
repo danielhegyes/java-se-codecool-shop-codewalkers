@@ -4,6 +4,10 @@ import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
 
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
@@ -15,11 +19,21 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
 
     //?
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "tahin";
-    private static final String DB_PASSWORD = "asdfg";
+    private static final String DB_USER = readConfigFile().get(0);
+    private static final String DB_PASSWORD = readConfigFile().get(1);
 
 
     private static ProductCategoryDaoJDBC instance = null;
+
+    private static List<String> readConfigFile() {
+        try {
+            return Files.readAllLines(Paths.get("src/dbConfig.txt"), Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Config file not found");
+        }
+        return null;
+    }
 
     /* A private Constructor prevents any other class from instantiating.
      */

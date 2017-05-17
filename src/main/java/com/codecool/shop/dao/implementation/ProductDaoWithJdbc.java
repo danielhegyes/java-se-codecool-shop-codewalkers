@@ -7,6 +7,10 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +20,22 @@ public class ProductDaoWithJdbc implements ProductDao {
     private static ProductDaoWithJdbc instance = null;
 
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "tahin";
-    private static final String DB_PASSWORD = "asdfg";
+    private static final String DB_USER = readConfigFile().get(0);
+    private static final String DB_PASSWORD = readConfigFile().get(1);
 
     private ProductCategoryDaoJDBC prodCatDaoJDBC = ProductCategoryDaoJDBC.getInstance();
     private SupplierDaoJDBC supplierDaoJDBC = SupplierDaoJDBC.getInstance();
+
+    private static List<String> readConfigFile() {
+        try {
+            return Files.readAllLines(Paths.get("src/dbConfig.txt"), Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Config file not found");
+        }
+        return null;
+    }
+
 
     public static ProductDaoWithJdbc getInstance() {
         if (instance == null) {
@@ -152,8 +167,8 @@ public class ProductDaoWithJdbc implements ProductDao {
         ProductDaoWithJdbc prodJdbc = ProductDaoWithJdbc.getInstance();
         SupplierDaoJDBC suppJdbc = SupplierDaoJDBC.getInstance();
         ProductCategoryDaoJDBC catJdbc = ProductCategoryDaoJDBC.getInstance();
-//       pdwj.add(prod);
-//       pdwj.add(prod2);
+//        pdwj.add(prod);
+//        pdwj.add(prod2);
         System.out.println(prodJdbc.find(11));
         System.out.println(prodJdbc.getAll());
         Supplier sup = suppJdbc.find(12);
