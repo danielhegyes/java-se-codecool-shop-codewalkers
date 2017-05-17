@@ -4,6 +4,8 @@ import java.util.Currency;
 
 public class Product extends BaseModel {
 
+    private static int currentId = 0;
+
     private float defaultPrice;
     private Currency defaultCurrency;
     private ProductCategory productCategory;
@@ -12,6 +14,8 @@ public class Product extends BaseModel {
 
     public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
         super(name, description);
+        this.id = currentId;
+        currentId++;
         this.setPrice(defaultPrice, currencyString);
         this.setSupplier(supplier);
         this.setProductCategory(productCategory);
