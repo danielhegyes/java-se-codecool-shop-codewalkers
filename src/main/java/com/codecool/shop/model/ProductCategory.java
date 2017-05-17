@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ProductCategory extends BaseModel {
 
     private static int currentId = 0;
-    private int id;
+
     private String department;
     private ArrayList<Product> products;
 

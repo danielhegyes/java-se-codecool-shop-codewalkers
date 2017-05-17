@@ -84,7 +84,10 @@ public class ProductDaoWithJdbc implements ProductDao {
         ProductCategory phone = new ProductCategory("Phone", "Hardware", "A smartphone is a cellular telephone with an integrated computer and other features not originally associated with telephones, such as an operating system, Web browsing and the ability to run software applications.");
         Supplier lenovo = new Supplier("Lenovo", "Computers");
         ProductDaoWithJdbc pdwj = ProductDaoWithJdbc.getInstance();
-        pdwj.add(new Product("Lenovo Laptop",380,"USD", "Great laptop!!!", phone, lenovo));
+        Product prod = new Product("Lenovo Laptop",380,"USD", "Great laptop!!!", phone, lenovo);
+        Product prod2 = new Product("Lenovo Laptop",380,"USD", "Great laptop!!!", phone, lenovo);
+        System.out.println(prod);
+        System.out.println(prod2);
     }
 
 }
