@@ -13,8 +13,8 @@ import java.util.List;
 public class SupplierDaoJDBC implements SupplierDao {
 
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "new_password";
+    private static final String DB_USER = "gombaspeteer";
+    private static final String DB_PASSWORD = "187818851953";
 
 
     private static SupplierDaoJDBC instance = null;
@@ -42,7 +42,7 @@ public class SupplierDaoJDBC implements SupplierDao {
     @Override
     public Supplier find(int id) {
 
-        String query = "SELECT * FROM product_category WHERE id ='" + id + "';";
+        String query = "SELECT * FROM supplier WHERE id ='" + id + "';";
 
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
