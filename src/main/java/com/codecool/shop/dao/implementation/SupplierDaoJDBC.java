@@ -1,47 +1,46 @@
 package com.codecool.shop.dao.implementation;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.model.Supplier;
 
-
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.*;
 
 /**
- * Created by judit on 16.05.17.
+ * Created by judit on 17.05.17.
  */
-public class ProductCategoryDaoJDBC implements ProductCategoryDao {
+public class SupplierDaoJDBC implements SupplierDao {
 
-    //?
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private static final String DB_USER = "postgres";
     private static final String DB_PASSWORD = "new_password";
 
 
-    private static ProductCategoryDaoJDBC instance = null;
+    private static SupplierDaoJDBC instance = null;
 
     /* A private Constructor prevents any other class from instantiating.
      */
-    private ProductCategoryDaoJDBC() {
+    private SupplierDaoJDBC() {
     }
 
-    public static ProductCategoryDaoJDBC getInstance() {
+    public static SupplierDaoJDBC getInstance() {
         if (instance == null) {
-            instance = new ProductCategoryDaoJDBC();
+
+            instance = new SupplierDaoJDBC();
         }
         return instance;
     }
 
     @Override
-    public void add(ProductCategory productCategory) {
-        String query = "INSERT INTO product_category (id, name, description, department) " +
-                "VALUES ('" + productCategory.getId() + "','" + productCategory.getName() + "', '" + productCategory.getDescription() + "', '" + productCategory.getDepartment() + "');";
+    public void add(Supplier supplier) {
+        String query = "INSERT INTO supplier (id, name, description)\n " +
+                "VALUES ('" + supplier.getId() + "','" + supplier.getName() + "', '" + supplier.getDescription() +  "');";
         executeQuery(query);
     }
 
     @Override
-    public ProductCategory find(int id) {
+    public Supplier find(int id) {
 
         String query = "SELECT * FROM product_category WHERE id ='" + id + "';";
 
@@ -50,10 +49,8 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             if (resultSet.next()){
-                ProductCategory result = new ProductCategory(resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getString("department"));
+                Supplier result = new Supplier(resultSet.getString("name"),
+                        resultSet.getString("description"));
                 return result;
             } else {
                 return null;
@@ -68,25 +65,25 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
 
     @Override
     public void remove(int id) {
-        String query = "DELETE FROM product_category WHERE id = '" + id +"';";
+        String query = "DELETE FROM supplier WHERE id = '" + id +"';";
         executeQuery(query);
     }
 
     @Override
-    public List<ProductCategory> getAll() {
-        String query = "SELECT * FROM product_category;";
+    public List<Supplier> getAll() {
 
-        List<ProductCategory> resultList = new ArrayList<>();
+        String query = "SELECT * FROM supplier;";
+
+        List<Supplier> resultList = new ArrayList<>();
 
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                ProductCategory actProdCat = new ProductCategory(resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getString("department"));
-                resultList.add(actProdCat);
+                Supplier actSupplier = new Supplier(resultSet.getString("name"),
+                        resultSet.getString("description"));
+                resultList.add(actSupplier);
             }
 
 
@@ -116,13 +113,13 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
     }
 
     public static void main(String[] args) {
-        //ProductCategory newCat1 = new ProductCategory("newcat", "dep", "desc");
-        //ProductCategory newCat2 = new ProductCategory("newcat2", "dep2", "desc");
-        ProductCategoryDaoJDBC prodCatDaoJdbc = ProductCategoryDaoJDBC.getInstance();
-        //prodCatDaoJdbc.add(newCat1);
-        //prodCatDaoJdbc.add(newCat2);
-        System.out.println(prodCatDaoJdbc.find(0));
-        System.out.println(prodCatDaoJdbc.find(1));
-    }
+        Supplier newSupplier1 = new Supplier("supplier", "dep");
+        Supplier newSupplier2 = new Supplier("newsupplier2", "dep2");
+        SupplierDaoJDBC SupplierDaoJdbc = SupplierDaoJDBC.getInstance();
+        SupplierDaoJdbc.add(newSupplier1);
+        SupplierDaoJdbc.add(newSupplier2);
 
+        System.out.println(newSupplier1.getId());
+        System.out.println(newSupplier2.getId());
+    }
 }

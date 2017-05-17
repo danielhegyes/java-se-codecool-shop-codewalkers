@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Supplier extends BaseModel {
 
     private static int currentId = 0;
-    private int id;
+
     private ArrayList<Product> products;
 
     public Supplier(String name, String description) {
@@ -14,6 +14,7 @@ public class Supplier extends BaseModel {
         this.id = currentId;
         currentId++;
         this.products = new ArrayList<>();
+        this.description = description;
     }
 
     public void setProducts(ArrayList<Product> products) {
