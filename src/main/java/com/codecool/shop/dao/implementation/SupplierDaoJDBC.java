@@ -3,6 +3,10 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +17,21 @@ import java.util.List;
 public class SupplierDaoJDBC implements SupplierDao {
 
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "new_password";
+    private static final String DB_USER = readConfigFile().get(0);
+    private static final String DB_PASSWORD = readConfigFile().get(1);
 
 
     private static SupplierDaoJDBC instance = null;
+
+    private static List<String> readConfigFile() {
+        try {
+            return Files.readAllLines(Paths.get("src/dbConfig.txt"), Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Config file not found");
+        }
+        return null;
+    }
 
     /* A private Constructor prevents any other class from instantiating.
      */
@@ -42,16 +56,14 @@ public class SupplierDaoJDBC implements SupplierDao {
     @Override
     public Supplier find(int id) {
 
-        String query = "SELECT * FROM product_category WHERE id ='" + id + "';";
+        String query = "SELECT * FROM supplier WHERE id ='" + id + "';";
 
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
         ){
             if (resultSet.next()){
-                Supplier result = new Supplier(resultSet.getString("name"),
-                        resultSet.getString("description"));
-                return result;
+                return instantiateSupplierFromQuery(resultSet);
             } else {
                 return null;
             }
@@ -81,8 +93,7 @@ public class SupplierDaoJDBC implements SupplierDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                Supplier actSupplier = new Supplier(resultSet.getString("name"),
-                        resultSet.getString("description"));
+                Supplier actSupplier = instantiateSupplierFromQuery(resultSet);
                 resultList.add(actSupplier);
             }
 
@@ -92,6 +103,14 @@ public class SupplierDaoJDBC implements SupplierDao {
         }
 
         return resultList;
+    }
+
+    public Supplier instantiateSupplierFromQuery(ResultSet resultSet) throws SQLException {
+        Supplier result = new Supplier(
+                resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getString("description"));
+        return result;
     }
 
     private Connection getConnection() throws SQLException {
