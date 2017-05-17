@@ -4,10 +4,15 @@ import java.util.ArrayList;
 
 
 public class Supplier extends BaseModel {
+
+    private static int currentId = 0;
+
     private ArrayList<Product> products;
 
     public Supplier(String name, String description) {
         super(name);
+        this.id = currentId;
+        currentId++;
         this.products = new ArrayList<>();
     }
 
