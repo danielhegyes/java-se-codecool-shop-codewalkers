@@ -15,8 +15,8 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
 
     //?
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "gombaspeteer";
-    private static final String DB_PASSWORD = "187818851953";
+    private static final String DB_USER = "tahin";
+    private static final String DB_PASSWORD = "asdfg";
 
 
     private static ProductCategoryDaoJDBC instance = null;
@@ -50,11 +50,7 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             if (resultSet.next()){
-                ProductCategory result = new ProductCategory(resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getString("department"));
-                return result;
+                return instantiateProductCategoryFromQuery(resultSet);
             } else {
                 return null;
             }
@@ -83,9 +79,7 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                ProductCategory actProdCat = new ProductCategory(resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getString("department"));
+                ProductCategory actProdCat = instantiateProductCategoryFromQuery(resultSet);
                 resultList.add(actProdCat);
             }
 
@@ -95,6 +89,14 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
         }
 
         return resultList;
+    }
+
+    public ProductCategory instantiateProductCategoryFromQuery(ResultSet resultSet) throws SQLException {
+        ProductCategory result = new ProductCategory(resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getString("description"),
+                resultSet.getString("department"));
+        return result;
     }
 
     private Connection getConnection() throws SQLException {

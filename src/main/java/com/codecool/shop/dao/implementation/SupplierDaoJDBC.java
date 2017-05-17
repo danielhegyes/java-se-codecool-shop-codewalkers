@@ -13,8 +13,8 @@ import java.util.List;
 public class SupplierDaoJDBC implements SupplierDao {
 
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "gombaspeteer";
-    private static final String DB_PASSWORD = "187818851953";
+    private static final String DB_USER = "tahin";
+    private static final String DB_PASSWORD = "asdfg";
 
 
     private static SupplierDaoJDBC instance = null;
@@ -49,11 +49,7 @@ public class SupplierDaoJDBC implements SupplierDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             if (resultSet.next()){
-                Supplier result = new Supplier(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("description"));
-                return result;
+                return instantiateSupplierFromQuery(resultSet);
             } else {
                 return null;
             }
@@ -83,8 +79,7 @@ public class SupplierDaoJDBC implements SupplierDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                Supplier actSupplier = new Supplier(resultSet.getString("name"),
-                        resultSet.getString("description"));
+                Supplier actSupplier = instantiateSupplierFromQuery(resultSet);
                 resultList.add(actSupplier);
             }
 
@@ -94,6 +89,14 @@ public class SupplierDaoJDBC implements SupplierDao {
         }
 
         return resultList;
+    }
+
+    public Supplier instantiateSupplierFromQuery(ResultSet resultSet) throws SQLException {
+        Supplier result = new Supplier(
+                resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getString("description"));
+        return result;
     }
 
     private Connection getConnection() throws SQLException {
