@@ -7,10 +7,8 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDaoWithJdbc implements ProductDao {
@@ -38,7 +36,30 @@ public class ProductDaoWithJdbc implements ProductDao {
 
     @Override
     public Product find(int id) {
-        return null;
+        String query = "SELECT * FROM product WHERE id=" + id +";";
+
+        List<Product> resultList = new ArrayList<>();
+
+
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        ){
+            while (resultSet.next()){
+                Product getProd = new Product(resultSet.getString("name"),
+                        resultSet.getString("defaultPrice"),
+                        resultSet.getString("currencyString"),
+                        resultSet.getString("desciption"),
+                        resultSet.getString("currencyString"),)
+                resultList.add(getProd);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultList;
     }
 
     @Override
