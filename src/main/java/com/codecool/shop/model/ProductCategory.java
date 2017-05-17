@@ -21,7 +21,6 @@ public class ProductCategory extends BaseModel {
     public ProductCategory(int id, String name, String department, String description) {
         this(name, department, description);
         this.id = id;
-
     }
 
     public String getDepartment() {

@@ -83,7 +83,8 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                ProductCategory actProdCat = new ProductCategory(resultSet.getString("name"),
+                ProductCategory actProdCat = new ProductCategory(resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getString("description"),
                         resultSet.getString("department"));
                 resultList.add(actProdCat);
@@ -116,13 +117,14 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
     }
 
     public static void main(String[] args) {
-        //ProductCategory newCat1 = new ProductCategory("newcat", "dep", "desc");
-        //ProductCategory newCat2 = new ProductCategory("newcat2", "dep2", "desc");
+        ProductCategory newCat1 = new ProductCategory("newcat", "dep", "desc");
+        ProductCategory newCat2 = new ProductCategory("newcat2", "dep2", "desc");
         ProductCategoryDaoJDBC prodCatDaoJdbc = ProductCategoryDaoJDBC.getInstance();
-        //prodCatDaoJdbc.add(newCat1);
-        //prodCatDaoJdbc.add(newCat2);
+        prodCatDaoJdbc.add(newCat1);
+        prodCatDaoJdbc.add(newCat2);
         System.out.println(prodCatDaoJdbc.find(0));
         System.out.println(prodCatDaoJdbc.find(1));
+        System.out.println(prodCatDaoJdbc.getAll());
     }
 
 }

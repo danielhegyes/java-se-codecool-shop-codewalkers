@@ -81,7 +81,8 @@ public class SupplierDaoJDBC implements SupplierDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                Supplier actSupplier = new Supplier(resultSet.getString("name"),
+                Supplier actSupplier = new Supplier(resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getString("description"));
                 resultList.add(actSupplier);
             }
@@ -121,5 +122,6 @@ public class SupplierDaoJDBC implements SupplierDao {
 
         System.out.println(newSupplier1.getId());
         System.out.println(newSupplier2.getId());
+        System.out.println(SupplierDaoJdbc.getAll());
     }
 }
