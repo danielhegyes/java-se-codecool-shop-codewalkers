@@ -1,9 +1,11 @@
+DROP TABLE if EXISTS product, product_category,supplier;
+
 CREATE TABLE product_category
 (
   id INTEGER PRIMARY KEY,
   name varchar(40),
   description varchar(40),
-  depatment VARCHAR(40)
+  department VARCHAR(40)
 );
 
 CREATE TABLE supplier
