@@ -115,14 +115,4 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
         }
     }
 
-    public static void main(String[] args) {
-        //ProductCategory newCat1 = new ProductCategory("newcat", "dep", "desc");
-        //ProductCategory newCat2 = new ProductCategory("newcat2", "dep2", "desc");
-        ProductCategoryDaoJDBC prodCatDaoJdbc = ProductCategoryDaoJDBC.getInstance();
-        //prodCatDaoJdbc.add(newCat1);
-        //prodCatDaoJdbc.add(newCat2);
-        System.out.println(prodCatDaoJdbc.find(0));
-        System.out.println(prodCatDaoJdbc.find(1));
-    }
-
 }
