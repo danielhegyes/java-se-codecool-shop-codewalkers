@@ -46,7 +46,7 @@
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         <li><a href="/index"><strong>All categories</strong></a></li>
-                        <li th:each="cat : ${category}"><a th:href="${'/category/'+ cat.getId()}">
+                        <li th:each="cat : ${categories}"><a th:href="${'/category/'+ cat.getId()}">
                             <strong th:text="${cat.name}"></strong></a></li>
                     </ul>
                 </div>
@@ -60,7 +60,7 @@
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         <li><a href="/index"><strong>All suppliers</strong></a></li>
-                        <li th:each="sup : ${supplier}"><a th:href="${'/supplier/'+ sup.getId()}">
+                        <li th:each="sup : ${suppliers}"><a th:href="${'/supplier/'+ sup.getId()}">
                             <strong th:text="${sup.name}"></strong></a></li>
                     </ul>
                 </div>
@@ -94,7 +94,7 @@
 
 <div class="container">
     <div class="well well-sm">
-        <a href="/cart" class="btn btn-primary">Shopping Cart</a>
+        <a href="/cart" id="cartButton" class="btn btn-primary" th:text="${'Shopping Cart ' + '('+totalQua +')'}">Shopping Cart</a>
     </div>
 </div>
 

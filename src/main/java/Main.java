@@ -29,7 +29,7 @@ public class Main {
         port(8888);
 
         // populate some data for the memory storage
-        populateData();
+        // populateData();
 
         // Always add generic routes to the end
         get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());
@@ -61,7 +61,7 @@ public class Main {
             String idString = request.params(":id");
             int id = Integer.parseInt(idString);
             Order.getInstance().addItem(id);
-            return request.params(":id");
+            return Order.getInstance().getTotalQuantity();
         });
 
         get("/addToQuantity/:id", (request, response) -> {

@@ -6,6 +6,7 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoJDBC;
 import com.codecool.shop.dao.implementation.ProductDaoWithJdbc;
 import com.codecool.shop.dao.implementation.SupplierDaoJDBC;
+import com.codecool.shop.model.Order;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -18,14 +19,16 @@ public class ProductController {
     public static ProductDao productDataStore = ProductDaoWithJdbc.getInstance();
     public static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
     public static SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
+    public static Order order = Order.getInstance();
 
     public static ModelAndView renderProducts(Request req, Response res) {
 
 
         Map params = new HashMap<>();
-        params.put("category", productCategoryDataStore.getAll());
+        params.put("totalQua", order.getTotalQuantity());
+        params.put("categories", productCategoryDataStore.getAll());
         params.put("products", productDataStore.getAll());
-        params.put("supplier", supplierDataStore.getAll());
+        params.put("suppliers", supplierDataStore.getAll());
         return new ModelAndView(params, "product/index");
     }
 
@@ -33,6 +36,7 @@ public class ProductController {
 
 
         Map params = new HashMap<>();
+        params.put("categories", productCategoryDataStore.getAll());
         params.put("category", productCategoryDataStore.find(id));
         params.put("products", productDataStore.getBy(productCategoryDataStore.find(id)));
         return new ModelAndView(params, "product/index");
@@ -41,6 +45,7 @@ public class ProductController {
 
 
         Map paramsSup = new HashMap<>();
+        paramsSup.put("suppliers", supplierDataStore.getAll());
         paramsSup.put("supplier", supplierDataStore.find(id));
         paramsSup.put("products", productDataStore.getBy(supplierDataStore.find(id)));
         return new ModelAndView(paramsSup, "product/index");
