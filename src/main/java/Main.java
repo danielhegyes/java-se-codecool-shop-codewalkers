@@ -28,9 +28,6 @@ public class Main {
         staticFileLocation("/public");
         port(8888);
 
-        // populate some data for the memory storage
-        //populateData();
-
 
         // Always add generic routes to the end
         get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());

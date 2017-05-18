@@ -41,7 +41,10 @@ public class Lineitem {
     public void addOneToQuantity(spark.Request request){
         this.quantity += 1;
         this.linePrice += this.product.getDefaultPrice();
+
         Order.getOrder(request).addToTotal(this.getProduct().getDefaultPrice());
+        Order.getOrder(request).addToTotalQuantity(1);
+
     }
 
     public boolean subOneFromQuantity(spark.Request request){

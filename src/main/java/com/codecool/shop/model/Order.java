@@ -3,10 +3,8 @@ package com.codecool.shop.model;
 
 
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoWithJdbc;
 import spark.Request;
-
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -20,6 +18,7 @@ public class Order {
 
     private int id;
     private Set<Lineitem> orderLines = new LinkedHashSet<>();
+    private int totalQuantity = 0;
     private double total = 0;
 
 
@@ -50,6 +49,9 @@ public class Order {
     public void addToTotal(float total) {
         this.total += total;
     }
+    public void addToTotalQuantity(int total){
+        totalQuantity += total;
+    }
 
     public void subFromTotal(float total) {
         this.total -= total;
@@ -61,13 +63,19 @@ public class Order {
                 return false;
             }
         }
-        this.orderLines.add(line);
-        this.total += line.getLinePrice();
+        orderLines.add(line);
+        total += line.getLinePrice();
+        totalQuantity += line.getQuantity();
         return true;
     }
 
     public void removeLine (Lineitem line) {
-              orderLines.remove(line);
+        orderLines.remove(line);
+        totalQuantity -= line.getQuantity();
+    }
+
+    public int getTotalQuantity(){
+        return  totalQuantity;
     }
 
     public void addItem(int id){
