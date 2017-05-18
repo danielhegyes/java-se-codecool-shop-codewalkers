@@ -6,6 +6,8 @@ $ (document).ready(function () {
         var id = this.id.substring(3,this.id.length);
         $.ajax({url: "/hello/" + id, success: function(result){
             console.log("Product added to cart");
+       $("#cartButton").text("Shopping Cart (" +result+")");
+
         }});
     });
 
@@ -23,8 +25,6 @@ $ (document).ready(function () {
             $("#linePrice"+id).text(json1.linePrice);
             var total = $("#total").text();
             $("#total").text(json1.total);
-
-
 
         }});
     });
