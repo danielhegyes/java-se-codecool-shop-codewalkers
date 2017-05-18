@@ -4,9 +4,6 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.model.ProductCategory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
-
-
 /**
  * Created by judit on 17.05.17.
  */
@@ -26,6 +23,15 @@ class ProductCategoryDaoJDBCTest {
 
         assertEquals(vegetable, vegetableFromDb);
         assertEquals(vegetable, vegetableFromMem);
+    }
+
+    @Test
+    public void findInDbOrMem() {
+        ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
+        ProductCategoryDaoMem productCategoryDaoMem = ProductCategoryDaoMem.getInstance();
+        ProductCategory vegetable = new ProductCategory(34, "vegetable", "grocery", "descriptipn");
+
+
     }
 
     @Test
