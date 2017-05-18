@@ -4,6 +4,7 @@ package com.codecool.shop.model;
 
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoWithJdbc;
 
 
 import java.util.LinkedHashSet;
@@ -66,7 +67,7 @@ public class Order {
     }
 
     public void addItem(int id){
-        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoWithJdbc.getInstance();
         Lineitem line = new Lineitem(productDataStore.find(id));
         instance.addLine(line);
     }
