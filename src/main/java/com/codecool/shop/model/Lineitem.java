@@ -42,6 +42,7 @@ public class Lineitem {
         this.quantity += 1;
         this.linePrice += this.product.getDefaultPrice();
         Order.getInstance().addToTotal(this.getProduct().getDefaultPrice());
+        Order.getInstance().addToTotalQuantity(1);
     }
 
     public boolean subOneFromQuantity(){

@@ -61,7 +61,7 @@ public class Main {
             String idString = request.params(":id");
             int id = Integer.parseInt(idString);
             Order.getInstance().addItem(id);
-            return request.params(":id");
+            return Order.getInstance().getTotalQuantity();
         });
 
         get("/addToQuantity/:id", (request, response) -> {

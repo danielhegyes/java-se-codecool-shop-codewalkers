@@ -6,6 +6,7 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoJDBC;
 import com.codecool.shop.dao.implementation.ProductDaoWithJdbc;
 import com.codecool.shop.dao.implementation.SupplierDaoJDBC;
+import com.codecool.shop.model.Order;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -18,11 +19,13 @@ public class ProductController {
     public static ProductDao productDataStore = ProductDaoWithJdbc.getInstance();
     public static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
     public static SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
+    public static Order order = Order.getInstance();
 
     public static ModelAndView renderProducts(Request req, Response res) {
 
 
         Map params = new HashMap<>();
+        params.put("totalQua", order.getTotalQuantity());
         params.put("categories", productCategoryDataStore.getAll());
         params.put("products", productDataStore.getAll());
         params.put("suppliers", supplierDataStore.getAll());
