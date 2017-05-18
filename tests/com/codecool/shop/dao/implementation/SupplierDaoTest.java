@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class SupplierDaoTest {
 
-    static SupplierDao supplierDao = SupplierDaoMem.getInstance();
+    static SupplierDao supplierDao = SupplierDaoJDBC.getInstance();
     Supplier vegetableStore; //= new ProductCategory(34, "vegetable", "grocery", "description");
     Supplier fruitStore; //= new ProductCategory(35, "fruit", "grocery", "description");
     Supplier vegetableStoreFromDb; //= productCategoryDao.find(vegetable.getId())

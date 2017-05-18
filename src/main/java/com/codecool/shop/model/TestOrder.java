@@ -6,8 +6,7 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.sun.org.apache.xpath.internal.operations.Or;
+import com.codecool.shop.dao.implementation.ProducCategoryDaoMem;
 
 /**
  * Created by tahin on 2017.05.02..
@@ -21,7 +20,7 @@ public class TestOrder {
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+        SupplierDao supplierDataStore = ProducCategoryDaoMem.getInstance();
 
         Supplier a = new Supplier("almaárus", "almákat árul");
         supplierDataStore.add(a);
