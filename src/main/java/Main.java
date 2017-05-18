@@ -29,7 +29,7 @@ public class Main {
         port(8888);
 
         // populate some data for the memory storage
-        populateData();
+        // populateData();
 
         // Always add generic routes to the end
         get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());

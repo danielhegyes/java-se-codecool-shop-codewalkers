@@ -23,9 +23,9 @@ public class ProductController {
 
 
         Map params = new HashMap<>();
-        params.put("category", productCategoryDataStore.getAll());
+        params.put("categories", productCategoryDataStore.getAll());
         params.put("products", productDataStore.getAll());
-        params.put("supplier", supplierDataStore.getAll());
+        params.put("suppliers", supplierDataStore.getAll());
         return new ModelAndView(params, "product/index");
     }
 
@@ -33,6 +33,7 @@ public class ProductController {
 
 
         Map params = new HashMap<>();
+        params.put("categories", productCategoryDataStore.getAll());
         params.put("category", productCategoryDataStore.find(id));
         params.put("products", productDataStore.getBy(productCategoryDataStore.find(id)));
         return new ModelAndView(params, "product/index");
@@ -41,6 +42,7 @@ public class ProductController {
 
 
         Map paramsSup = new HashMap<>();
+        paramsSup.put("suppliers", supplierDataStore.getAll());
         paramsSup.put("supplier", supplierDataStore.find(id));
         paramsSup.put("products", productDataStore.getBy(supplierDataStore.find(id)));
         return new ModelAndView(paramsSup, "product/index");
