@@ -5,6 +5,7 @@ package com.codecool.shop.model;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoWithJdbc;
+import spark.Request;
 
 
 import java.util.LinkedHashSet;
@@ -20,19 +21,22 @@ public class Order {
     private int id;
     private Set<Lineitem> orderLines = new LinkedHashSet<>();
     private double total = 0;
-    private static Order instance = null;
 
 
-    private Order(){
+    public Order(){
         this.id = currentId;
         currentId++;
     }
 
-    public static Order getInstance() {
-        if (instance == null) {
-            instance = new Order();
+    public static Order getOrder(Request request){
+        Order myOrder;
+        if (request.session().attribute("order") != null){
+            myOrder = request.session().attribute("order");
+        } else {
+            myOrder = new Order();
+            request.session().attribute("order", myOrder);
         }
-        return instance;
+        return myOrder;
     }
 
     public Set<Lineitem> getOrderLines() {
@@ -69,7 +73,7 @@ public class Order {
     public void addItem(int id){
         ProductDao productDataStore = ProductDaoWithJdbc.getInstance();
         Lineitem line = new Lineitem(productDataStore.find(id));
-        instance.addLine(line);
+        addLine(line);
     }
 
     public int getId() {

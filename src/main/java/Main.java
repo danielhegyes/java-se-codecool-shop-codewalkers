@@ -9,6 +9,7 @@ import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.*;
 import spark.Request;
 import spark.Response;
+import spark.TemplateViewRoute;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import javax.json.Json;
@@ -20,7 +21,6 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 public class Main {
 
 
-
     public static void main(String[] args) {
 
         // default server settings
@@ -29,7 +29,8 @@ public class Main {
         port(8888);
 
         // populate some data for the memory storage
-        populateData();
+        //populateData();
+
 
         // Always add generic routes to the end
         get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());
@@ -52,7 +53,12 @@ public class Main {
         });
 
 
-        get("/cart", CartController::renderCart, new ThymeleafTemplateEngine());
+        //get("/cart", CartController::renderCart(), new ThymeleafTemplateEngine());
+
+        get("/cart", (Request request, Response res) -> {
+            Order myOrder = Order.getOrder(request);
+            return new ThymeleafTemplateEngine().render(CartController.renderCart(request, res, myOrder));
+        });
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
@@ -60,21 +66,23 @@ public class Main {
         get("/hello/:id", (request, response) -> {
             String idString = request.params(":id");
             int id = Integer.parseInt(idString);
-            Order.getInstance().addItem(id);
+            Order myOrder = Order.getOrder(request);
+            myOrder.addItem(id);
             return request.params(":id");
         });
 
         get("/addToQuantity/:id", (request, response) -> {
             String idString = request.params(":id");
             int id = Integer.parseInt(idString);
-            Lineitem selected = Order.getInstance().getLine(id);
-            selected.addOneToQuantity();
-            System.out.println(Order.getInstance());
+            Order myOrder = Order.getOrder(request);
+            Lineitem selected = myOrder.getLine(id);
+            selected.addOneToQuantity(request);
+            System.out.println(myOrder);
 
             JsonObject object = Json.createObjectBuilder()
                     .add("quantity", selected.getQuantity())
                     .add("linePrice", selected.getLinePrice())
-                    .add("total", Order.getInstance().getTotal())
+                    .add("total", myOrder.getTotal())
                     .build();
 
             return object.toString();
@@ -83,22 +91,25 @@ public class Main {
         get("/subFromQuantity/:id", (request, response) -> {
             String idString = request.params(":id");
             int id = Integer.parseInt(idString);
-            Lineitem selected = Order.getInstance().getLine(id);
-            if (selected.subOneFromQuantity()) {
-                    Order.getInstance().removeLine(selected);
+            Order myOrder = Order.getOrder(request);
+            Lineitem selected = myOrder.getLine(id);
+            if (selected.subOneFromQuantity(request)) {
+                    myOrder.removeLine(selected);
             }
 
-            System.out.println(Order.getInstance());
+            System.out.println(myOrder);
 
             JsonObject object = Json.createObjectBuilder()
                     .add("quantity", selected.getQuantity())
                     .add("linePrice", selected.getLinePrice())
-                    .add("total", Order.getInstance().getTotal())
+                    .add("total", myOrder.getTotal())
                     .build();
 
             return object.toString();
         });
     }
+
+
 
 
 

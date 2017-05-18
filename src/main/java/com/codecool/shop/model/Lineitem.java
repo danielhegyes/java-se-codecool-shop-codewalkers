@@ -1,6 +1,6 @@
 package com.codecool.shop.model;
 
-
+import sun.misc.Request;
 
 /**
  * Created by tahin on 2017.05.02..
@@ -38,16 +38,16 @@ public class Lineitem {
                 '}';
     }
 
-    public void addOneToQuantity(){
+    public void addOneToQuantity(spark.Request request){
         this.quantity += 1;
         this.linePrice += this.product.getDefaultPrice();
-        Order.getInstance().addToTotal(this.getProduct().getDefaultPrice());
+        Order.getOrder(request).addToTotal(this.getProduct().getDefaultPrice());
     }
 
-    public boolean subOneFromQuantity(){
+    public boolean subOneFromQuantity(spark.Request request){
         this.quantity -= 1;
         this.linePrice -= this.product.getDefaultPrice();
-        Order.getInstance().subFromTotal(this.getProduct().getDefaultPrice());
+        Order.getOrder(request).subFromTotal(this.getProduct().getDefaultPrice());
         return (quantity <= 0);
     }
 

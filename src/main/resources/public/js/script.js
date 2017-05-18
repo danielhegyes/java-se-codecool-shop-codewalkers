@@ -6,6 +6,7 @@ $ (document).ready(function () {
         var id = this.id.substring(3,this.id.length);
         $.ajax({url: "/hello/" + id, success: function(result){
             console.log("Product added to cart");
+
         }});
     });
 
