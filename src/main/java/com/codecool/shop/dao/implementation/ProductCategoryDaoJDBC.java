@@ -17,8 +17,7 @@ import java.sql.*;
  */
 public class ProductCategoryDaoJDBC implements ProductCategoryDao {
 
-    //?
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
+    public  static String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private static final String DB_USER = readConfigFile().get(0);
     private static final String DB_PASSWORD = readConfigFile().get(1);
 
@@ -131,7 +130,6 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
         }
     }
 
-<<<<<<< HEAD
     public static void main(String[] args) {
         ProductCategory newCat1 = new ProductCategory("newcat", "dep", "desc");
         ProductCategory newCat2 = new ProductCategory("newcat2", "dep2", "desc");
@@ -143,6 +141,4 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
         System.out.println(prodCatDaoJdbc.getAll());
     }
 
-=======
->>>>>>> 05e2d5009c40c76af835428652ac55ad88ee1319
 }

@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class SupplierDaoJDBC implements SupplierDao {
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
+     static String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private static final String DB_USER = readConfigFile().get(0);
     private static final String DB_PASSWORD = readConfigFile().get(1);
 
@@ -103,14 +103,6 @@ public class SupplierDaoJDBC implements SupplierDao {
         }
 
         return resultList;
-    }
-
-    public Supplier instantiateSupplierFromQuery(ResultSet resultSet) throws SQLException {
-        Supplier result = new Supplier(
-                resultSet.getInt("id"),
-                resultSet.getString("name"),
-                resultSet.getString("description"));
-        return result;
     }
 
     public Supplier instantiateSupplierFromQuery(ResultSet resultSet) throws SQLException {
