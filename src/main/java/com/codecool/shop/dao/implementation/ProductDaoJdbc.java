@@ -15,9 +15,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDaoWithJdbc implements ProductDao {
+public class ProductDaoJdbc implements ProductDao {
 
-    private static ProductDaoWithJdbc instance = null;
+    private static ProductDaoJdbc instance = null;
 
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private static final String DB_USER = readConfigFile().get(0);
@@ -37,9 +37,9 @@ public class ProductDaoWithJdbc implements ProductDao {
     }
 
 
-    public static ProductDaoWithJdbc getInstance() {
+    public static ProductDaoJdbc getInstance() {
         if (instance == null) {
-            instance = new ProductDaoWithJdbc();
+            instance = new ProductDaoJdbc();
         }
         return instance;
     }
@@ -164,7 +164,7 @@ public class ProductDaoWithJdbc implements ProductDao {
 //        Supplier lenovo = new Supplier("Lenovo", "Computers");
 //        Product prod = new Product("Lenovo Laptop",380,"USD", "Great laptop!!!", phone, lenovo);
 //        Product prod2 = new Product("Lenovo Laptop",380,"USD", "Great laptop!!!", phone, lenovo);
-        ProductDaoWithJdbc prodJdbc = ProductDaoWithJdbc.getInstance();
+        ProductDaoJdbc prodJdbc = ProductDaoJdbc.getInstance();
         SupplierDaoJDBC suppJdbc = SupplierDaoJDBC.getInstance();
         ProductCategoryDaoJDBC catJdbc = ProductCategoryDaoJDBC.getInstance();
 //        pdwj.add(prod);

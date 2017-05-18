@@ -19,6 +19,7 @@ class ProductCategoryDaoTest {
     public static ProductCategory fruit = new ProductCategory(35, "fruit", "grocery", "description");
     public static ProductCategory vegetableGet = productCategoryDao.find(vegetable.getId());
     public static ProductCategory fruitGet = productCategoryDao.find(vegetable.getId());
+    public static Integer meaningOfLife = 42;
 
     @BeforeAll
     private static void testDataUploader() {
@@ -61,11 +62,5 @@ class ProductCategoryDaoTest {
 
     }
 
-    @Test
-    public void checkIfNameIsString() {
-
-        
-
-    }
 
 }
