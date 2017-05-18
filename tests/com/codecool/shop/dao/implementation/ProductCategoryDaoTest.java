@@ -1,102 +1,145 @@
 package com.codecool.shop.dao.implementation;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.model.ProductCategory;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.model.Supplier;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by judit on 17.05.17.
  */
-class ProductCategoryDaoTest {
+public class SupplierDaoJDBC implements SupplierDao {
 
-     static ProductCategoryDao productCategoryDao = ProductCategoryDaoJDBC.getInstance();
-     ProductCategory vegetable; //= new ProductCategory(34, "vegetable", "grocery", "description");
-     ProductCategory fruit; //= new ProductCategory(35, "fruit", "grocery", "description");
-     ProductCategory vegetableFromDb; //= productCategoryDao.find(vegetable.getId())
-     ProductCategory fruitFromDb; //= productCategoryDao.find(vegetable.getId());
-     ProductCategory tomato;
-     ProductCategory tomatoFromDb;
-    private static InitTestShop initTestShop = new InitTestShop();
+    static String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
+    private static final String DB_USER = readConfigFile().get(0);
+    private static final String DB_PASSWORD = readConfigFile().get(1);
 
 
-    @BeforeAll
-    public static void testDataUploader() {
+    private static SupplierDaoJDBC instance = null;
 
-        if (productCategoryDao instanceof ProductCategoryDaoJDBC){
-            initTestShop.initDbForTestshop();
-            ProductCategoryDaoJDBC.DATABASE = initTestShop.DATABASE;
+    private static List<String> readConfigFile() {
+        try {
+            return Files.readAllLines(Paths.get("src/dbConfig.txt"), Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Config file not found");
+        }
+        return null;
+    }
+
+    /* A private Constructor prevents any other class from instantiating.
+     */
+    private SupplierDaoJDBC() {
+    }
+
+    public static SupplierDaoJDBC getInstance() {
+        if (instance == null) {
+
+            instance = new SupplierDaoJDBC();
+        }
+        return instance;
+    }
+
+    @Override
+    public void add(Supplier supplier) {
+        String query = "INSERT INTO supplier (id, name, description)\n " +
+                "VALUES ('" + supplier.getId() + "','" + supplier.getName() + "', '" + supplier.getDescription() +  "');";
+        executeQuery(query);
+    }
+
+    @Override
+    public Supplier find(int id) {
+
+        String query = "SELECT * FROM supplier WHERE id ='" + id + "';";
+
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        ){
+            if (resultSet.next()){
+                return instantiateSupplierFromQuery(resultSet);
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-
-
+        return null;
     }
 
-    @BeforeEach
-    public void PopulateData() {
-        initTestShop.initDbForTestshop();
-        fruit = new ProductCategory(34, "fruit", "grocery1", "description1");
-        vegetable = new ProductCategory(35, "vegetable", "grocery2", "description2");
-        tomato = new ProductCategory(36, "tomato", "grocery3", "description3");
-        productCategoryDao.add(fruit);
-        productCategoryDao.add(vegetable);
-        productCategoryDao.add(tomato);
-        fruitFromDb = productCategoryDao.find(fruit.getId());
-        vegetableFromDb = productCategoryDao.find(vegetable.getId());
-        tomatoFromDb = productCategoryDao.find(tomato.getId());
+    @Override
+    public void remove(int id) {
+        String query = "DELETE FROM supplier WHERE id = '" + id +"';";
+        executeQuery(query);
     }
 
-    @Test
-    public void removeAndAddCheck() {
-        productCategoryDao.remove(vegetable.getId());
-        productCategoryDao.remove(fruit.getId());
-        productCategoryDao.add(vegetable);
-        productCategoryDao.add(fruit);
+    @Override
+    public List<Supplier> getAll() {
 
-        assertEquals(vegetable.getId(), vegetableFromDb.getId());
-    }
-    
-    @Test
-    public void checkIfIdValid() {
+        String query = "SELECT * FROM supplier;";
 
-        assertEquals(vegetable.getId(), vegetableFromDb.getId());
+        List<Supplier> resultList = new ArrayList<>();
+
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        ){
+            while (resultSet.next()){
+                Supplier actSupplier = instantiateSupplierFromQuery(resultSet);
+                resultList.add(actSupplier);
+            }
 
 
-    }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-    @Test
-    public void checkIfNameValid() {
-
-        assertEquals(vegetable.getName(), vegetableFromDb.getName());
-    }
-
-    @Test
-    public void removeFromDbOrMem() {
-
-        productCategoryDao.remove(fruit.getId());
-
-        assertNull(productCategoryDao.find(fruit.getId()));
-
+        return resultList;
     }
 
-    @Test
-    public void checkIfIdIsInt() {
-
-        assertTrue(vegetableFromDb.getId() == 35);
-
+    public Supplier instantiateSupplierFromQuery(ResultSet resultSet) throws SQLException {
+        Supplier result = new Supplier(
+                resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getString("description"));
+        return result;
     }
 
-    @Test
-    public void checkGetAll() {
-
-        assertEquals(vegetable.getId(), vegetableFromDb.getId());
-        assertEquals(fruit.getId(), fruitFromDb.getId());
-        assertEquals(tomato.getId(), tomatoFromDb.getId());
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(
+                DATABASE,
+                DB_USER,
+                DB_PASSWORD);
     }
 
+    private void executeQuery(String query) {
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+        ){
+            statement.execute(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        Supplier newSupplier1 = new Supplier("supplier", "dep");
+        Supplier newSupplier2 = new Supplier("newsupplier2", "dep2");
+        SupplierDaoJDBC SupplierDaoJdbc = SupplierDaoJDBC.getInstance();
+        SupplierDaoJdbc.add(newSupplier1);
+        SupplierDaoJdbc.add(newSupplier2);
+
+        System.out.println(newSupplier1.getId());
+        System.out.println(newSupplier2.getId());
+        System.out.println(SupplierDaoJdbc.getAll());
+    }
 }
