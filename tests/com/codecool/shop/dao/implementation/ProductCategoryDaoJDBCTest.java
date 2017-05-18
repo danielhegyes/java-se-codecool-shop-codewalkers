@@ -1,18 +1,26 @@
 package com.codecool.shop.dao.implementation;
 
 
+import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 /**
  * Created by judit on 17.05.17.
  */
 class ProductCategoryDaoJDBCTest {
 
+    public static ProductCategoryDao productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
+    public static ProductCategoryDao productCategoryDaoMem = ProductCategoryDaoMem.getInstance();
+
+    @BeforeEach
+    public void
+    
     @Test
     public void addToDbOrMem() {
-        ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
-        ProductCategoryDaoMem productCategoryDaoMem = ProductCategoryDaoMem.getInstance();
         ProductCategory vegetable = new ProductCategory(34, "vegetable", "grocery", "descriptipn");
 
         productCategoryDaoJDBC.add(vegetable);
@@ -27,18 +35,20 @@ class ProductCategoryDaoJDBCTest {
 
     @Test
     public void findInDbOrMem() {
-        ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
-        ProductCategoryDaoMem productCategoryDaoMem = ProductCategoryDaoMem.getInstance();
         ProductCategory vegetable = new ProductCategory(34, "vegetable", "grocery", "descriptipn");
 
+        productCategoryDaoJDBC.add(vegetable);
+        productCategoryDaoMem.add(vegetable);
 
+        ProductCategory vegetableFromDb = productCategoryDaoJDBC.find(vegetable.getId());
+        ProductCategory vegetableFromMem = productCategoryDaoMem.find(vegetable.getId());
+
+        assertEquals(vegetable, vegetableFromDb);
+        assertEquals(vegetable, vegetableFromMem);
     }
 
     @Test
     public void removeFromDbOrMem() {
-
-        ProductCategoryDaoJDBC productCategoryDaoJDBC = ProductCategoryDaoJDBC.getInstance();
-        ProductCategoryDaoMem productCategoryDaoMem = ProductCategoryDaoMem.getInstance();
         ProductCategory vegetable = new ProductCategory(34, "vegetable", "grocery", "descriptipn");
 
         productCategoryDaoJDBC.add(vegetable);
@@ -55,7 +65,10 @@ class ProductCategoryDaoJDBCTest {
 
     }
 
+    @Test
+    public void getAllFromDbOrMem() {
 
+    }
 
 
 
