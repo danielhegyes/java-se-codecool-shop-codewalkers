@@ -5,7 +5,6 @@ import java.util.Currency;
 public class Product extends BaseModel {
 
     private static int currentId = 0;
-
     private float defaultPrice;
     private Currency defaultCurrency;
     private ProductCategory productCategory;
