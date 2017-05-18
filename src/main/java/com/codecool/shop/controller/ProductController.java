@@ -3,9 +3,9 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoJDBC;
+import com.codecool.shop.dao.implementation.ProductDaoWithJdbc;
+import com.codecool.shop.dao.implementation.SupplierDaoJDBC;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -15,10 +15,12 @@ import java.util.Map;
 
 public class ProductController {
 
+    public static ProductDao productDataStore = ProductDaoWithJdbc.getInstance();
+    public static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
+    public static SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
+
     public static ModelAndView renderProducts(Request req, Response res) {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+
 
         Map params = new HashMap<>();
         params.put("category", productCategoryDataStore.getAll());
@@ -28,8 +30,7 @@ public class ProductController {
     }
 
     public static ModelAndView prodByCategory(Request req, Response res, int id){
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+
 
         Map params = new HashMap<>();
         params.put("category", productCategoryDataStore.find(id));
@@ -37,12 +38,11 @@ public class ProductController {
         return new ModelAndView(params, "product/index");
     }
     public static ModelAndView prodBySupplier(Request request, Response response, int id){
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        SupplierDao productDataSupplier = SupplierDaoMem.getInstance();
+
 
         Map paramsSup = new HashMap<>();
-        paramsSup.put("supplier", productDataSupplier.find(id));
-        paramsSup.put("products", productDataStore.getBy(productDataSupplier.find(id)));
+        paramsSup.put("supplier", supplierDataStore.find(id));
+        paramsSup.put("products", productDataStore.getBy(supplierDataStore.find(id)));
         return new ModelAndView(paramsSup, "product/index");
 
     }
