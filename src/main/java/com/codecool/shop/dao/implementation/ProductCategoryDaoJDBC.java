@@ -4,6 +4,10 @@ import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
 
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
@@ -15,11 +19,21 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
 
     //?
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "new_password";
+    private static final String DB_USER = readConfigFile().get(0);
+    private static final String DB_PASSWORD = readConfigFile().get(1);
 
 
     private static ProductCategoryDaoJDBC instance = null;
+
+    private static List<String> readConfigFile() {
+        try {
+            return Files.readAllLines(Paths.get("src/dbConfig.txt"), Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Config file not found");
+        }
+        return null;
+    }
 
     /* A private Constructor prevents any other class from instantiating.
      */
@@ -50,11 +64,7 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             if (resultSet.next()){
-                ProductCategory result = new ProductCategory(resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getString("department"));
-                return result;
+                return instantiateProductCategoryFromQuery(resultSet);
             } else {
                 return null;
             }
@@ -83,10 +93,7 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                ProductCategory actProdCat = new ProductCategory(resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getString("department"));
+                ProductCategory actProdCat = instantiateProductCategoryFromQuery(resultSet);
                 resultList.add(actProdCat);
             }
 
@@ -96,6 +103,14 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
         }
 
         return resultList;
+    }
+
+    public ProductCategory instantiateProductCategoryFromQuery(ResultSet resultSet) throws SQLException {
+        ProductCategory result = new ProductCategory(resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getString("description"),
+                resultSet.getString("department"));
+        return result;
     }
 
     private Connection getConnection() throws SQLException {
@@ -116,6 +131,7 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
         }
     }
 
+<<<<<<< HEAD
     public static void main(String[] args) {
         ProductCategory newCat1 = new ProductCategory("newcat", "dep", "desc");
         ProductCategory newCat2 = new ProductCategory("newcat2", "dep2", "desc");
@@ -127,4 +143,6 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
         System.out.println(prodCatDaoJdbc.getAll());
     }
 
+=======
+>>>>>>> 05e2d5009c40c76af835428652ac55ad88ee1319
 }
