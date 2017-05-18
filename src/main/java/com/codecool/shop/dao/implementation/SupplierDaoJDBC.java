@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class SupplierDaoJDBC implements SupplierDao {
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
+     static String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
     private static final String DB_USER = readConfigFile().get(0);
     private static final String DB_PASSWORD = readConfigFile().get(1);
 
@@ -140,5 +140,6 @@ public class SupplierDaoJDBC implements SupplierDao {
 
         System.out.println(newSupplier1.getId());
         System.out.println(newSupplier2.getId());
+        System.out.println(SupplierDaoJdbc.getAll());
     }
 }

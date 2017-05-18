@@ -6,20 +6,20 @@ import com.codecool.shop.model.Supplier;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDaoMem implements SupplierDao {
+public class ProducCategoryDaoMem implements SupplierDao {
 
     private List<Supplier> DATA = new ArrayList<>();
-    private static SupplierDaoMem instance = null;
+    private static ProducCategoryDaoMem instance = null;
 
     /* A private Constructor prevents any other class from instantiating.
      */
-    private SupplierDaoMem() {
+    private ProducCategoryDaoMem() {
     }
 
-    public static SupplierDaoMem getInstance() {
+    public static ProducCategoryDaoMem getInstance() {
         if (instance == null) {
 
-            instance = new SupplierDaoMem();
+            instance = new ProducCategoryDaoMem();
         }
         return instance;
     }

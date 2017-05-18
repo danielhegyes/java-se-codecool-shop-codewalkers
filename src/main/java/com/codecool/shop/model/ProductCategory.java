@@ -13,15 +13,14 @@ public class ProductCategory extends BaseModel {
         super(name);
         this.id = currentId;
         currentId++;
-        this.department = department;
-        this.products = new ArrayList<>();
         this.description = description;
+        this.products = new ArrayList<>();
+        this.department = department;
     }
 
     public ProductCategory(int id, String name, String department, String description) {
-        this(name, department, description);
+        this(name, description, department);
         this.id = id;
-
     }
 
     public String getDepartment() {
