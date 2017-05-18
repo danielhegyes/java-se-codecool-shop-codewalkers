@@ -158,20 +158,21 @@ public class ProductDaoWithJdbc implements ProductDao {
             e.printStackTrace();
         }
     }
-}
 
 
 
-//    public static void main(String[] args) {
+
+    public static void main(String[] args) {
 //        ProductCategory phone = new ProductCategory("Phone", "Hardware", "A smartphone is a cellular telephone with an integrated computer and other features not originally associated with telephones, such as an operating system, Web browsing and the ability to run software applications.");
 //        Supplier lenovo = new Supplier("Lenovo", "Computers");
 //        Product prod = new Product("Lenovo Laptop",380,"USD", "Great laptop!!!", phone, lenovo);
-//        ProductDaoWithJdbc prodJdbc = ProductDaoWithJdbc.getInstance();
-//        SupplierDaoJDBC suppJdbc = SupplierDaoJDBC.getInstance();
-//        ProductCategoryDaoJDBC catJdbc = ProductCategoryDaoJDBC.getInstance();
+        ProductDaoWithJdbc prodJdbc = ProductDaoWithJdbc.getInstance();
+        SupplierDaoJDBC suppJdbc = SupplierDaoJDBC.getInstance();
+        ProductCategoryDaoJDBC catJdbc = ProductCategoryDaoJDBC.getInstance();
 //        pdwj.add(prod);
-//    }
+        System.out.println(catJdbc.getAll());
+    }
 
-//}
+}
 
 
