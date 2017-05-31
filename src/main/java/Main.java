@@ -2,6 +2,10 @@ import com.codecool.shop.controller.CartController;
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.model.Lineitem;
 import com.codecool.shop.model.Order;
+import com.codecool.shop.model.Product;
+import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -12,10 +16,33 @@ import javax.json.JsonObject;
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
+/**
+ * <h1>Codecool Shop</h1>
+ * A simple Spark based webshop application with database connection
+ * where the user can add items to the cart.
+ * <p>
+ * <b>Note:</b> Please don't use this application in real life
+ * as it has serious security issues.
+ *
+ * @author  CodewalkerZ
+ * @version 0.2
+ * @since   2017-05-01
+ */
+
 public class Main {
 
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
+
+    /**
+     * This is the main method which handles the Spark requests.
+     * It does logging to the console.
+     * @param args Unused.
+     */
     public static void main(String[] args) {
+
+        PropertyConfigurator.configure("src/main/resources/log4j.properties");
+        logger.info("I am informative!");
 
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
@@ -48,6 +75,7 @@ public class Main {
 
         get("/cart", (Request request, Response res) -> {
             Order myOrder = Order.getOrder(request);
+            logger.debug("The actual order is: {}", myOrder);
             return new ThymeleafTemplateEngine().render(CartController.renderCart(request, res, myOrder));
         });
 
@@ -89,6 +117,7 @@ public class Main {
             }
 
             System.out.println(myOrder);
+
 
             JsonObject object = Json.createObjectBuilder()
                     .add("quantity", selected.getQuantity())
