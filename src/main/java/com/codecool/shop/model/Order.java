@@ -4,6 +4,10 @@ package com.codecool.shop.model;
 
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductDaoWithJdbc;
+import com.sun.org.apache.xpath.internal.operations.Or;
+import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 
 import java.util.LinkedHashSet;
@@ -15,6 +19,9 @@ import java.util.Set;
 public class Order {
 
     private static int currentId = 0;
+    private static final Logger logger = LoggerFactory.getLogger(Order.class);
+
+
 
     private int id;
     private Set<Lineitem> orderLines = new LinkedHashSet<>();
@@ -80,7 +87,9 @@ public class Order {
 
     public void addItem(int id){
         ProductDao productDataStore = ProductDaoWithJdbc.getInstance();
-        Lineitem line = new Lineitem(productDataStore.find(id));
+        Product itemToAdd = productDataStore.find(id);
+        Lineitem line = new Lineitem(itemToAdd);
+        logger.debug("Item added: {}", itemToAdd);
         addLine(line);
     }
 
