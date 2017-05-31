@@ -23,7 +23,7 @@ public class Main {
     public static void main(String[] args) {
 
         PropertyConfigurator.configure("src/main/resources/log4j.properties");
-        logger.info("I am informative!");
+        logger.info("I share all the useful and interesting!");
 
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
